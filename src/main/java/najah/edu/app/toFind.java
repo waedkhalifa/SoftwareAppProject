@@ -29,7 +29,7 @@ public class toFind {
 	     List<Home> H=new ArrayList<Home>();
 		  
 	    	for(int i=0;i<homes.size();i++) {
-				if (homes.get(i).getMaterial().getMa().contains(specification))
+				if (homes.get(i).getMaterial().getMa().equalsIgnoreCase(specification))
 				{
 				H.add(homes.get(i));
 				}
@@ -62,6 +62,19 @@ public class toFind {
 	    	}
 	    	return H;
 	 }
+
+	public List<Home> byPlacement(String specification) {
+
+			   List<Home> H=new ArrayList<Home>();
+				  
+		    	for(int i=0;i<homes.size();i++) {
+					if (homes.get(i).getPlacement().getPl().equalsIgnoreCase(specification))
+					{
+					H.add(homes.get(i));
+					}
+		    	}
+		    	return H;
+	}
 	 
 	   
 	}

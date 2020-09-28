@@ -22,6 +22,7 @@ public class SearchHomeSteps {
 	private List<Home> byMaterial;
 	private List<Home> byPrice;
 	private List<Home> byArea;
+	private List<Home> byPlacement;
 	int price;
 	int area;
 	private toFind f;
@@ -54,6 +55,9 @@ public class SearchHomeSteps {
 	else if (specification.equals(Material.WOOD)||specification.equals(Material.STONE)||
 			specification.equals(Material.BRICK)) 
 		{ byMaterial = f.ByMaterial(specification); }
+	
+	else if (specification.equals(Placement.CITY)||specification.equals(Placement.VILLAGE))
+	{ byPlacement = f.byPlacement(specification); }
 	
 	}
 	
@@ -148,5 +152,34 @@ public class SearchHomeSteps {
         { System.out.println(byArea.get(x)); }
 	
 	}
+	
+	@Then("A list of homes that matches the placement specification should be returned and printed on the console")
+	public void aListOfHomesThatMatchesThePlacementSpecificationShouldBeReturnedAndPrintedOnTheConsole()
+	{
+		if(specification.equals(Placement.VILLAGE))
+		{
+			  assertEquals(1, byPlacement.size()); 
+				for(int s=0;s<byPlacement.size();s++) {
+			 { assertTrue(byPlacement.get(s).getPlacement().getPl().equals(specification));} 
+	             }
+	
+         }
+		
+		if(specification.equals(Placement.CITY)) 
+		{
+			 assertEquals(2, byPlacement.size()); 
+				for(int p=0;p<byPlacement.size();p++) {
+			 { assertTrue(byPlacement.get(p).getPlacement().getPl().equals(specification));} 
+	             }
+		}
+		
+		for(int x=0;x<byPlacement.size();x++)
+		{
+			System.out.println(byPlacement.get(x));
+		}
+	}
+	
+	
+	
 
 }
