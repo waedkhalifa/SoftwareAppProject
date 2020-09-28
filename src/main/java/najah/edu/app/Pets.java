@@ -10,7 +10,7 @@ public class Pets {
 		this.pets=pets;
 		// TODO Auto-generated constructor stub
 	}
-	public String getPets() {
+	public String getPe() {
 		return pets;
 	}
 }

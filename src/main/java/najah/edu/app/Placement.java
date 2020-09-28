@@ -10,7 +10,7 @@ public class Placement {
 			this.placement=placement;
 			// TODO Auto-generated constructor stub
 		}
-		public String getPlacement() {
+		public String getPl() {
 			return placement;
 		}
 }

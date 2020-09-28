@@ -19,6 +19,7 @@ public class SearchHomeSteps {
 	
 	private String specification;
 	private static List<Home> byType;
+	private List<Home> byMaterial;
 	private toFind f;
 
 	public SearchHomeSteps(toFind f) {
@@ -43,8 +44,13 @@ public class SearchHomeSteps {
 	@When("I search about home by {string}") 
 	public void iSearchAboutHomeBy(String specification) 
 	{ this.specification = specification;
-	if (specification.equals(Type.APARTMENT) || specification.equals(Type.HOUSE)) { 
-       byType=f.Bytype(specification); }
+	if (specification.equals(Type.APARTMENT)||specification.equals(Type.HOUSE)) { 
+          byType=f.Bytype(specification); }
+	
+	else if (specification.equals(Material.WOOD)||specification.equals(Material.STONE)||
+			specification.equals(Material.BRICK)) 
+		{ byMaterial = f.ByMaterial(specification); }
+	
 	}
 	
 	@Then("A list of homes that matches the type specification should be returned and printed on the console")
@@ -52,7 +58,7 @@ public class SearchHomeSteps {
 	if (specification.equals(Type.APARTMENT)) 
 	{ assertEquals(2,byType.size());
 	for(int k=0;k<byType.size();k++) {
-		assertTrue(byType.get(k).getType().getType().equals(specification)); 
+		assertTrue(byType.get(k).getType().getTy().equals(specification)); 
 		}
 	}
 	 
@@ -60,12 +66,41 @@ public class SearchHomeSteps {
 	{  
         assertEquals(1, byType.size()); 
 	    for(int s=0;s<byType.size();s++) {
-            { assertTrue(byType.get(s).getType().getType().equals(specification)); } 
+            { assertTrue(byType.get(s).getType().getTy().equals(specification)); } 
 	     }
 	}
 	
 	for(int x=0;x<byType.size();x++)
 	{System.out.println(byType.get(x));}
+	}
+	
+	@Then("A list of homes that matches the material specification should be returned and printed on the console")
+	 public void aListOfHomesThatMatchesTheMaterialSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
+		if (specification.equals(Material.WOOD)) 
+		{ assertEquals(2,byMaterial.size());
+		for(int k=0;k<byMaterial.size();k++)
+		{ assertTrue(byMaterial.get(k).getMaterial().getMa().equals(specification));}
+		
+		}
+		 
+		else if (specification.equals(Material.STONE)) 
+		{  
+	   assertEquals(0, byMaterial.size()); 
+		for(int s=0;s<byMaterial.size();s++) {
+	 {assertTrue(byMaterial.get(s).getType().getTy().equals(specification));} 
+		  }
+		
+		}
+		
+		else if (specification.equals(Material.BRICK)) 
+		{  
+			   assertEquals(1, byMaterial.size()); 
+				for(int s=0;s<byMaterial.size();s++) {
+			 { assertTrue(byMaterial.get(s).getMaterial().getMa().equals(specification)); } 
+				}
+		}
+		for(int x=0;x<byMaterial.size();x++)
+		{ System.out.println(byMaterial.get(x));}
 	}
 
 }

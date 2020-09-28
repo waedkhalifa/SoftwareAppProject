@@ -16,7 +16,7 @@ public class toFind {
 	     List<Home> H=new ArrayList<Home>();
 	  
 	    	for(int i=0;i<homes.size();i++) {
-				if (homes.get(i).getType().getType().equalsIgnoreCase(specification))
+				if (homes.get(i).getType().getTy().equalsIgnoreCase(specification))
 				{
 				H.add(homes.get(i));
 				
@@ -24,6 +24,18 @@ public class toFind {
 	    	}
 	    	return H;
 	    	}
+
+	public List<Home> ByMaterial(String specification) {
+	     List<Home> H=new ArrayList<Home>();
+		  
+	    	for(int i=0;i<homes.size();i++) {
+				if (homes.get(i).getMaterial().getMa().contains(specification))
+				{
+				H.add(homes.get(i));
+				}
+	    	}
+	    	return H;
+	}
 	   
 	 
 	   

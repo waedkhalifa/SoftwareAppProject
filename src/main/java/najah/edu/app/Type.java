@@ -10,7 +10,7 @@ public class Type {
 		this.type=type;
 		// TODO Auto-generated constructor stub
 	}
-	public String getType() {
+	public String getTy() {
 		return type;
 	}
 	

@@ -32,9 +32,9 @@ public class Home {
 	}
 
 	@Override public String toString() {
-		return "{Type=" + type.getType() + ",Material=" + material.getMaterial() +
-				 ", Placement=" + placement.getPlacement() + ", Pets=" + pets.getPets() +
-				  ", Amenities=" + amenities.getAmenities() + ", Price=" + price + ",Area=" + area + 
+		return "{Type=" + type.getTy() + ",Material=" + material.getMa() +
+				 ", Placement=" + placement.getPl() + ", Pets=" + pets.getPe() +
+				  ", Amenities=" + amenities.getAm() + ", Price=" + price + ",Area=" + area + 
 				  ", Number of bedrooms=" + numOfBedrooms + ", Number of bathrooms=" + numOfBathrooms
 				  + ", Lease length=" + LeaseLength +"}";
 

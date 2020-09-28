@@ -12,7 +12,7 @@ private String amenities;
 		this.amenities=amenities;
 		// TODO Auto-generated constructor stub
 	}
-	public String getAmenities() {
+	public String getAm() {
 		return amenities;
 	}
 }

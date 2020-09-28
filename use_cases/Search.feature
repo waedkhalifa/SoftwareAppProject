@@ -14,4 +14,15 @@ Then A list of homes that matches the type specification should be returned and 
 Scenario: Search home by type 
 When I search about home by "HOUSE" 
 Then A list of homes that matches the type specification should be returned and printed on the console 
- 
+
+Scenario: Search home by material 
+When I search about home by "BRICK" 
+Then A list of homes that matches the material specification should be returned and printed on the console 
+
+Scenario: Search home by material 
+When I search about home by "WOOD" 
+Then A list of homes that matches the material specification should be returned and printed on the console 
+
+Scenario: Search home by material 
+When I search about home by "STONE" 
+Then A list of homes that matches the material specification should be returned and printed on the console 

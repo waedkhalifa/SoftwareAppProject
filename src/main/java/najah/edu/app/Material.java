@@ -12,7 +12,7 @@ public class Material {
 		this.material=material;
 		// TODO Auto-generated constructor stub
 	}
-	public String getMaterial() {
+	public String getMa() {
 		return material;
 	}
 	
