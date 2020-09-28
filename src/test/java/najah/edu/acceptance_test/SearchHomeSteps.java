@@ -21,7 +21,9 @@ public class SearchHomeSteps {
 	private static List<Home> byType;
 	private List<Home> byMaterial;
 	private List<Home> byPrice;
+	private List<Home> byArea;
 	int price;
+	int area;
 	private toFind f;
 
 	public SearchHomeSteps(toFind f) {
@@ -122,6 +124,28 @@ public class SearchHomeSteps {
 	
         for(int x=0;x<byPrice.size();x++)
            { System.out.println(byPrice.get(x)); }
+	
+	}
+	
+	@When("I search about home with area less than {int}") 
+	public void iSearchAboutHomeWithAreaLessThan(Integer area) {
+		 this.area = area.intValue();
+		byArea=f.ByArea(this.area);
+			
+			}
+	
+	@Then("A list of homes that matches the area specification should be returned and printed on the console")
+	 public void aListOfHomesThatMatchesTheAreaSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
+	
+		if (area<140) 
+		{ assertEquals(2,byArea.size());
+		  for(int k=0;k<byArea.size();k++) {
+			assertTrue(byArea.get(k).getArea()<area);
+		   }
+		}
+	
+         for(int x=0;x<byArea.size();x++)
+        { System.out.println(byArea.get(x)); }
 	
 	}
 

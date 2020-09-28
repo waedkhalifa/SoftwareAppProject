@@ -48,7 +48,20 @@ public class toFind {
 				}
 	    	}
 	    	return H;
-	 } 
+	 }
+	 
+	 public List<Home> ByArea(int area) {
+		   
+	     List<Home> H=new ArrayList<Home>();
+	  
+	    	for(int i=0;i<homes.size();i++) {
+				if (homes.get(i).getArea()<area)
+				{
+				H.add(homes.get(i));
+				}
+	    	}
+	    	return H;
+	 }
 	 
 	   
 	}

@@ -29,4 +29,8 @@ Then A list of homes that matches the material specification should be returned 
 
 Scenario: Search about home with less than a specific price
 When I search about home with price less than 400
-Then A list of homes that matches the price specification should be returned and printed on the console 
+Then A list of homes that matches the price specification should be returned and printed on the console
+
+Scenario: Search about home with less than a specific area 
+When I search about home with area less than 140
+Then A list of homes that matches the area specification should be returned and printed on the console  
