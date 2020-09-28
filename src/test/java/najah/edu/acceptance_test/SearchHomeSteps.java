@@ -23,8 +23,11 @@ public class SearchHomeSteps {
 	private List<Home> byPrice;
 	private List<Home> byArea;
 	private List<Home> byPlacement;
+	private List<Home> byRangePrices;
 	int price;
 	int area;
+	int p1;
+	int p2;
 	private toFind f;
 
 	public SearchHomeSteps(toFind f) {
@@ -165,7 +168,7 @@ public class SearchHomeSteps {
 	
          }
 		
-		if(specification.equals(Placement.CITY)) 
+		else if(specification.equals(Placement.CITY)) 
 		{
 			 assertEquals(2, byPlacement.size()); 
 				for(int p=0;p<byPlacement.size();p++) {
@@ -177,6 +180,29 @@ public class SearchHomeSteps {
 		{
 			System.out.println(byPlacement.get(x));
 		}
+	}
+	
+	@When("I search about home by between {int} and {int}") 
+	public void iSearchAboutHomeByBetweenAnd(Integer price1, Integer price2) {
+		 p1 = price1.intValue();
+		 p2 = price2.intValue();
+		byRangePrices=f.ByRangePrices(p1,p2);
+			
+			}
+	
+	@Then("A list of homes that matches the range of prices should be returned and printed on the console")
+	public void aListOfHomesThatMatchesTheRangeOfPricesShouldBeReturnedAndPrintedOnTheConsole() {
+		if (p1>231 && p2<550) 
+		{ assertEquals(2,byRangePrices.size());
+		  for(int k=0;k<byRangePrices.size();k++) {
+			assertTrue(byRangePrices.get(k).getPrice()>231 && byRangePrices.get(k).getPrice()<550);
+		   }
+		}
+		for(int x=0;x<byRangePrices.size();x++)
+		{
+			System.out.println(byRangePrices.get(x));
+		}
+		
 	}
 	
 	

@@ -75,6 +75,20 @@ public class toFind {
 		    	}
 		    	return H;
 	}
+
+	public List<Home> ByRangePrices(int p1, int p2) {
+
+		 List<Home> H=new ArrayList<Home>();
+		  
+	    	for(int i=0;i<homes.size();i++) {
+				if ((homes.get(i).getPrice() > p1) && (homes.get(i).getPrice()<p2))
+				{
+				H.add(homes.get(i));
+				}
+	    	}
+	    	return H;
+		
+	}
 	 
 	   
 	}
