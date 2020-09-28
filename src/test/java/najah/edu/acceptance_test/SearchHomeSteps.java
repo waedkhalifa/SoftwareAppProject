@@ -122,12 +122,11 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the price specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesThePriceSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
-		if (price<400) 
-		{ assertEquals(2,byPrice.size());
+		 assertEquals(2,byPrice.size());
 	    	for(int k=0;k<byPrice.size();k++) {
 		    	assertTrue(byPrice.get(k).getPrice()<price);
 		    }
-		}
+		
 	
         for(int x=0;x<byPrice.size();x++)
            { System.out.println(byPrice.get(x)); }
@@ -143,13 +142,10 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the area specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesTheAreaSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
-	
-		if (area<140) 
-		{ assertEquals(2,byArea.size());
+		  assertEquals(2,byArea.size());
 		  for(int k=0;k<byArea.size();k++) {
 			assertTrue(byArea.get(k).getArea()<area);
 		   }
-		}
 	
          for(int x=0;x<byArea.size();x++)
         { System.out.println(byArea.get(x)); }
@@ -192,17 +188,16 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the range of prices should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheRangeOfPricesShouldBeReturnedAndPrintedOnTheConsole() {
-		if (p1>231 && p2<550) 
-		{ assertEquals(2,byRangePrices.size());
+		 assertEquals(2,byRangePrices.size());
 		  for(int k=0;k<byRangePrices.size();k++) {
-			assertTrue(byRangePrices.get(k).getPrice()>231 && byRangePrices.get(k).getPrice()<550);
+			assertTrue(byRangePrices.get(k).getPrice()>p1 && byRangePrices.get(k).getPrice()<p2);
 		   }
-		}
+
 		for(int x=0;x<byRangePrices.size();x++)
 		{
 			System.out.println(byRangePrices.get(x));
 		}
-		
+
 	}
 	
 	
