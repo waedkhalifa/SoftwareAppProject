@@ -20,6 +20,8 @@ public class SearchHomeSteps {
 	private String specification;
 	private static List<Home> byType;
 	private List<Home> byMaterial;
+	private List<Home> byPrice;
+	int price;
 	private toFind f;
 
 	public SearchHomeSteps(toFind f) {
@@ -101,6 +103,26 @@ public class SearchHomeSteps {
 		}
 		for(int x=0;x<byMaterial.size();x++)
 		{ System.out.println(byMaterial.get(x));}
+	}
+	
+	@When("I search about home with price less than {int}") 
+	public void iSearchAboutHomeWithPriceLessThan(Integer price) {
+		 this.price = price.intValue();
+		byPrice=f.ByPrice(this.price);
+	}
+	
+	@Then("A list of homes that matches the price specification should be returned and printed on the console")
+	 public void aListOfHomesThatMatchesThePriceSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
+		if (price<400) 
+		{ assertEquals(2,byPrice.size());
+	    	for(int k=0;k<byPrice.size();k++) {
+		    	assertTrue(byPrice.get(k).getPrice()<price);
+		    }
+		}
+	
+        for(int x=0;x<byPrice.size();x++)
+           { System.out.println(byPrice.get(x)); }
+	
 	}
 
 }
