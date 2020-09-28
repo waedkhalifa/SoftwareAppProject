@@ -1,5 +1,5 @@
 package najah.edu.app;
- 
+  
 public class Type {
 
 	public static final String APARTMENT = "APARTMENT";

@@ -1,5 +1,5 @@
 package najah.edu.app;
- 
+  
 import java.util.List;
 
 public class Home {

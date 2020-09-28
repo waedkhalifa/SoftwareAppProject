@@ -5,7 +5,7 @@ public class Amenities {
 	public static final String FIREPLACE = "FIREPLACE";
 	public static final String GARAGEPARKING = "GARAGEPARKING";
 
- 
+  
 private String amenities;
 
 	public Amenities(String amenities) {

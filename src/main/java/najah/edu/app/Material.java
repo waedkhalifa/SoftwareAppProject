@@ -1,5 +1,5 @@
 package najah.edu.app;
- 
+  
 public class Material {
 
 	public static final String BRICK = "BRICK";
