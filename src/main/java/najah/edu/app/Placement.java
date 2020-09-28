@@ -1,5 +1,5 @@
 package najah.edu.app;
-
+ 
 public class Placement {
 	public static final String CITY = "CITY";
 	public static final String VILLAGE = "VILLAGE";
