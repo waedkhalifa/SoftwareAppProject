@@ -24,6 +24,7 @@ public class SearchHomeSteps {
 	private List<Home> byArea;
 	private List<Home> byPlacement;
 	private List<Home> byRangePrices;
+	private List<Home> byPets;
 	int price;
 	int area;
 	int p1;
@@ -61,6 +62,9 @@ public class SearchHomeSteps {
 	
 	else if (specification.equals(Placement.CITY)||specification.equals(Placement.VILLAGE))
 	{ byPlacement = f.byPlacement(specification); }
+	
+	else if (specification.equals(Pets.YES)||specification.equals(Pets.NO))
+	{ byPets = f.byPets(specification); }
 	
 	}
 	
@@ -178,17 +182,17 @@ public class SearchHomeSteps {
 		}
 	}
 	
-	@When("I search about home by between {int} and {int}") 
-	public void iSearchAboutHomeByBetweenAnd(Integer price1, Integer price2) {
+	@When("I search about home by between range {int} and {int}") 
+	public void iSearchAboutHomeByBetweenRangeAnd(Integer price1, Integer price2) {
 		 p1 = price1.intValue();
 		 p2 = price2.intValue();
 		byRangePrices=f.ByRangePrices(p1,p2);
 			
 			}
 	
-	@Then("A list of homes that matches the range of prices should be returned and printed on the console")
+	@Then("A list of homes that matches between range of prices should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheRangeOfPricesShouldBeReturnedAndPrintedOnTheConsole() {
-		 assertEquals(2,byRangePrices.size());
+		assertEquals(2,byRangePrices.size());
 		  for(int k=0;k<byRangePrices.size();k++) {
 			assertTrue(byRangePrices.get(k).getPrice()>p1 && byRangePrices.get(k).getPrice()<p2);
 		   }
@@ -199,6 +203,29 @@ public class SearchHomeSteps {
 		}
 
 	}
+	
+	@Then("A list of homes that matches the allow pets should be returned and printed on the console")
+	public void aListOfHomesThatMatchesTheAllowPetsShouldBeReturnedAndPrintedOnTheConsole(){
+		if (specification.equals(Pets.YES)) 
+		{ assertEquals(1,byPets.size());
+		for(int k=0;k<byPets.size();k++) {
+			assertTrue(byPets.get(k).getPet().getPe().equals(specification)); 
+			}
+		}
+		 
+		else if (specification.equals(Pets.NO)) 
+		{  
+	        assertEquals(2,byPets.size()); 
+		    for(int s=0;s<byPets.size();s++) {
+	            { assertTrue(byPets.get(s).getPet().getPe().equals(specification)); } 
+		     }
+		}
+		
+		for(int x=0;x<byPets.size();x++)
+		{System.out.println(byPets.get(x));}
+		}
+	
+
 	
 	
 	

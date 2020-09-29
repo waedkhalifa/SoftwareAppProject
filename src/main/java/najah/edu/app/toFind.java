@@ -89,6 +89,20 @@ public class toFind {
 	    	return H;
 		
 	}
+	
+	public List<Home> byPets(String specification) {
+		 List<Home> H=new ArrayList<Home>();
+		  
+	    	for(int i=0;i<homes.size();i++) {
+				if (homes.get(i).getPet().getPe().equalsIgnoreCase(specification))
+				{
+				H.add(homes.get(i));
+				}
+	    	}
+	    	return H;
+		
+	}
+	 
 	 
 	   
 	}
