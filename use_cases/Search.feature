@@ -12,11 +12,21 @@ Scenario: Search home by type
 When I search about home by "APARTMENT" 
 Then A list of homes that matches the type specification should be returned and printed on the console 
 
+Scenario: Search home by type 
+When I search about home by "HOUSE" 
+Then A list of homes that matches the type specification should be returned and printed on the console 
 
 Scenario: Search home by material 
 When I search about home by "WOOD" 
 Then A list of homes that matches the material specification should be returned and printed on the console 
 
+Scenario: Search home by material 
+When I search about home by "STONE" 
+Then A list of homes that matches the material specification should be returned and printed on the console 
+
+Scenario: Search home by material 
+When I search about home by "BRICK" 
+Then A list of homes that matches the material specification should be returned and printed on the console 
 
 Scenario: Search about home with less than a specific price
 When I search about home with price less than 400
@@ -30,12 +40,20 @@ Scenario: Search home by placement
 When I search about home by "CITY" 
 Then A list of homes that matches the placement specification should be returned and printed on the console 
 
+Scenario: Search home by placement 
+When I search about home by "VILLAGE" 
+Then A list of homes that matches the placement specification should be returned and printed on the console 
+
 Scenario: Search home between range of prices 
 When I search about home by between range 231 and 550 of prices
 Then A list of homes that matches between range of prices should be returned and printed on the console  
 
 Scenario: Search home by Allow Pets 
 When I search about home by "YES" 
+Then A list of homes that matches the allow pets should be returned and printed on the console
+
+Scenario: Search home by Allow Pets 
+When I search about home by "NO" 
 Then A list of homes that matches the allow pets should be returned and printed on the console
 
 Scenario: Search home by amenities
@@ -47,8 +65,32 @@ When I search about home by area between 121 and 250
 Then A list of homes that matches the range of area should be returned and printed on the console 
 
 Scenario: Search home by number of bedrooms
+When I search about home by number of bedrooms 1
+Then A list of homes that matches the number of bedrooms should be returned and printed on the console
+
+Scenario: Search home by number of bedrooms
+When I search about home by number of bedrooms 2
+Then A list of homes that matches the number of bedrooms should be returned and printed on the console
+
+Scenario: Search home by number of bedrooms
+When I search about home by number of bedrooms 3
+Then A list of homes that matches the number of bedrooms should be returned and printed on the console
+
+Scenario: Search home by number of bedrooms
 When I search about home by number of bedrooms 4
 Then A list of homes that matches the number of bedrooms should be returned and printed on the console
+
+Scenario: Search home by number of bedrooms
+When I search about home by number of bedrooms 5
+Then A list of homes that matches the number of bedrooms should be returned and printed on the console
+
+Scenario: Search home by number of bathrooms
+When I search about home by number of bathrooms 1
+Then A list of homes that matches the number of bathrooms should be returned and printed on the console
+
+Scenario: Search home by number of bathrooms
+When I search about home by number of bathrooms 2
+Then A list of homes that matches the number of bathrooms should be returned and printed on the console
 
 Scenario: Search home by number of bathrooms
 When I search about home by number of bathrooms 3
@@ -56,6 +98,30 @@ Then A list of homes that matches the number of bathrooms should be returned and
 
 Scenario: Search home by lease length
 When I search about home by lease length 6
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 7
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 8
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 9
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 10
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 11
+Then A list of homes that matches the lease length should be returned and printed on the console
+
+Scenario: Search home by lease length
+When I search about home by lease length 12
 Then A list of homes that matches the lease length should be returned and printed on the console
 
 Scenario: Search home by type and by material

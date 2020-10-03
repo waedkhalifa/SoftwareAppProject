@@ -252,7 +252,7 @@ public class SearchHomeSteps {
 	@Then("A list of homes that matches the amenities specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesTheAmenitiesSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
 	if (specification.contains(Amenities.AIRCONDITIONING)) 
-	{ assertEquals(0,byAmenities.size());
+	{ assertEquals(1,byAmenities.size());
 	
 	}
 	 
@@ -267,7 +267,7 @@ public class SearchHomeSteps {
 	}
 	
 	if (specification.contains(Amenities.FIREPLACE)) 
-	{ assertEquals(0,byAmenities.size());
+	{ assertEquals(1,byAmenities.size());
 	
 	}
 	
@@ -277,7 +277,7 @@ public class SearchHomeSteps {
 	}
 	
 	if (specification.contains(Amenities.SWIMMINGPOOL)) 
-	{ assertEquals(0,byAmenities.size());
+	{ assertEquals(1,byAmenities.size());
 
 	}
 //	for(int x=0;x<byAmenities.size();x++)
@@ -311,10 +311,34 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the number of bedrooms should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheNumberOfBedroomsShouldBeReturnedAndPrintedOnTheConsole(){
-		  assertEquals(2,byNumberOfBedrooms.size());
-		  for(int k=0;k<byNumberOfBedrooms.size();k++) {
-			assertTrue(byNumberOfBedrooms.get(k).getNumOfBedrooms()==4);
-		   }
+		
+		if (numBedrooms==1) 
+		{ 
+			 assertEquals(0,byNumberOfBedrooms.size());
+		
+		}
+		else if (numBedrooms==2) 
+		{ 
+			 assertEquals(0,byNumberOfBedrooms.size());
+			
+		}
+		else if (numBedrooms==3) 
+		{  
+			 assertEquals(1,byNumberOfBedrooms.size());
+		
+		}
+		 
+		else if (numBedrooms==4) 
+		{  
+			 assertEquals(2,byNumberOfBedrooms.size());
+		
+		}
+		
+		else if (numBedrooms==5) 
+		{  
+			 assertEquals(1,byNumberOfBedrooms.size());
+		
+		}
 
 //		for(int x=0;x<byNumberOfBedrooms.size();x++)
 //		{System.out.println(byNumberOfBedrooms.get(x));}
@@ -328,10 +352,22 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the number of bathrooms should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheNumberOfBathroomsShouldBeReturnedAndPrintedOnTheConsole(){
-		  assertEquals(2,byNumberOfBathrooms.size());
-		  for(int k=0;k<byNumberOfBathrooms.size();k++) {
-			assertTrue(byNumberOfBathrooms.get(k).getNumOfBathrooms()==3);
-		   }
+		if (numBathrooms==1) 
+		{ 
+			assertEquals(0,byNumberOfBathrooms.size());
+		
+		}
+		else if (numBathrooms==2) 
+		{ 
+			assertEquals(2,byNumberOfBathrooms.size());
+			
+		}
+		else if (numBathrooms==3) 
+		{  
+			assertEquals(2,byNumberOfBathrooms.size());
+		
+		}
+		  
 
 	//	for(int x=0;x<byNumberOfBathrooms.size();x++)
 		//{System.out.println(byNumberOfBathrooms.get(x));}
@@ -347,10 +383,41 @@ public class SearchHomeSteps {
 	
 	@Then("A list of homes that matches the lease length should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheLeaseLengthShouldBeReturnedAndPrintedOnTheConsole(){
-		  assertEquals(2,byLeaseLength.size());
-		  for(int k=0;k<byLeaseLength.size();k++) {
-			assertTrue(byLeaseLength.get(k).getLeaseLength()==6);
-		   }
+		
+		if (LeaseLength==6) 
+		{ 
+			assertEquals(2,byLeaseLength.size());
+		
+		}
+		else if (LeaseLength==7) 
+		{ 
+			assertEquals(0,byLeaseLength.size());
+		}
+		
+		else if (LeaseLength==8) 
+		{ 
+			assertEquals(0,byLeaseLength.size());
+		}
+		
+		else if (LeaseLength==9) 
+		{ 
+			assertEquals(0,byLeaseLength.size());
+		}
+		
+		else if (LeaseLength==10) 
+		{ 
+			assertEquals(0,byLeaseLength.size());
+		}
+		
+		else if (LeaseLength==11) 
+		{ 
+			assertEquals(0,byLeaseLength.size());
+		}
+		
+		else if (LeaseLength==12) 
+		{ 
+			assertEquals(2,byLeaseLength.size());
+		}
 
 		//for(int x=0;x<byLeaseLength.size();x++)
 		//{System.out.println(byLeaseLength.get(x));}
