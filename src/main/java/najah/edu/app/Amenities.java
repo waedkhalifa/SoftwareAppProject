@@ -9,13 +9,14 @@ public class Amenities {
 	public static final String SWIMMINGPOOL = "SWIMMINGPOOL";
 
   
-private String amenities;
+private String Amenities;
 
 	public Amenities(String amenities) {
-		this.amenities=amenities;
+		Amenities=amenities;
+		
 		// TODO Auto-generated constructor stub
 	}
 	public String getAm() {
-		return amenities;
+		return Amenities;
 	}
 }
