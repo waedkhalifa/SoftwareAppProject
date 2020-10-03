@@ -257,7 +257,7 @@ public class SearchHomeSteps {
 	}
 	 
 	if (specification.contains(Amenities.BALCONY)) 
-	{ assertEquals(1,byAmenities.size());
+	{ assertEquals(2,byAmenities.size());
 
 	}
 	

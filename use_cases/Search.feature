@@ -4,7 +4,7 @@ Background: The System has a repository of homes with their specifications (type
 Given  these homes are contained in the system
                 |HOUSE_WOOD_VILLAGE_NO_GARAGEPARKING,FIREPLACE,ELEVATOR|510_150_3_2_6|
                 |HOUSE_STONE_CITY_YES_AIRCONDITIONING,SWIMMINGPOOL|300_145_5_3_6|
-                |APARTMENT_BRICK_CITY_NO_GARAGEPARKING|230_120_4_2_12|
+                |APARTMENT_BRICK_CITY_NO_BALCONY|230_120_4_2_12|
                 |APARTMENT_WOOD_CITY_YES_BALCONY|233_120_4_3_12|
                
 
@@ -58,6 +58,10 @@ Then A list of homes that matches the allow pets should be returned and printed 
 
 Scenario: Search home by amenities
 When I search about home by "GARAGEPARKING,ELEVATOR" 
+Then A list of homes that matches the amenities specification should be returned and printed on the console 
+
+Scenario: Search home by amenities
+When I search about home by "BALCONY" 
 Then A list of homes that matches the amenities specification should be returned and printed on the console 
 
 Scenario: Search home between range of area 
