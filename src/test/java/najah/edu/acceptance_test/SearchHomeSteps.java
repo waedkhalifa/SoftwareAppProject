@@ -16,7 +16,7 @@ import najah.edu.app.Type;
 import najah.edu.app.toFind;
 
 public class SearchHomeSteps {
-	
+	 
 	private String specification;
 	private static List<Home> byType;
 	private List<Home> byMaterial;
