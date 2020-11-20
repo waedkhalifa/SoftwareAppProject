@@ -6,14 +6,13 @@ public class Material {
 	public static final String WOOD = "WOOD";
 	public static final String STONE = "STONE";
 	
-    private String material;
+    private String materialName;
 
 	public Material(String material) {
-		this.material=material;
-		// TODO Auto-generated constructor stub
+		materialName=material;
 	}
 	public String getMa() {
-		return material;
+		return materialName;
 	}
 	
 }

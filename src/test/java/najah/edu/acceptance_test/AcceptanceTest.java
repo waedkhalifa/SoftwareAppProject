@@ -12,7 +12,7 @@ plugin = { "html:target/cucumber/wikipedia.html"},
 monochrome=true, 
 snippets = SnippetType.CAMELCASE, 
 glue = { "najah.edu.acceptance_test"}, 
-strict=true 
+strict=true
 )
 
 public class AcceptanceTest {

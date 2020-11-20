@@ -4,13 +4,12 @@ public class Placement {
 	public static final String CITY = "CITY";
 	public static final String VILLAGE = "VILLAGE";
 
-	private String placement;
+	private String placementName;
 	
 	public Placement(String placement) {
-			this.placement=placement;
-			// TODO Auto-generated constructor stub
+			placementName=placement;
 		}
 		public String getPl() {
-			return placement;
+			return placementName;
 		}
 }

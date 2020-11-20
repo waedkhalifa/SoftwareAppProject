@@ -1,42 +1,63 @@
 package najah.edu.app;
   
-import java.util.List;
-
 public class Home {
 	private Type type; 
 	private Material material; 
 	private Placement placement; 
-	private Pets pets; 
+	private String pets; 
 	private Amenities amenities; 
 	private int price; 
 	private int area; 
 	private int numOfBedrooms; 
 	private int numOfBathrooms; 
-	private int LeaseLength; 
+	private int leaseLength; 
 
-	public Home(Type type, Material material,Placement placement, Pets pets,Amenities amenities,
-			int price, int area, int numOfBedrooms , int numOfBathrooms,
-			int LeaseLength ) { 
-		super(); 
-		this.type = type; 
-		this.material = material; 
-		this.placement = placement; 
-		this.pets = pets; 
-		this.amenities= amenities; 
-		this.price = price; 
-		this.area = area; 
-		this.numOfBedrooms = numOfBedrooms; 
-		this.numOfBathrooms = numOfBathrooms; 
-		this.LeaseLength = LeaseLength; 
+
+	public Home() { 
+/*		
+ replace old constructor with 10 parameters, with this empty constructor
+ and set methods */
 		
 	}
 
-	@Override public String toString() {
+public void setType(Type type) {
+	this.type=type;
+}
+public void setMaterial(Material material) {
+	this.material=material;
+}
+public void setPlacement(Placement placement) {
+	this.placement=placement;
+}
+public void setPets(String pets) {
+	this.pets=pets;
+}
+public void setAmenities(Amenities amenities) {
+	this.amenities=amenities;
+}
+public void setPrice(int price) {
+	this.price=price;
+}
+public void setArea(int area) {
+	this.area=area;
+}
+public void setNumOfBedrooms(int numOfBedrooms) {
+	this.numOfBedrooms=numOfBedrooms;
+}
+public void setNumOfBathrooms(int numOfBathrooms) {
+	this.numOfBathrooms=numOfBathrooms;
+}
+public void setLeaseLength(int leaseLength) {
+	this.leaseLength=leaseLength;
+}
+
+	@Override
+	public String toString() {
 		return "{Type=" + type.getTy() + ", Material=" + material.getMa() +
-				 ", Placement=" + placement.getPl() + ", Pets=" + pets.getPe() +
+				 ", Placement=" + placement.getPl() + ", Pets=" + pets +
 				  ", Amenities=" + amenities.getAm() + ", Price=" + price + ", Area=" + area + 
 				  ", Number of bedrooms=" + numOfBedrooms + ", Number of bathrooms=" + numOfBathrooms
-				  + ", Lease length=" + LeaseLength +"}";
+				  + ", Lease length=" + leaseLength +"}";
 
 				
 	}
@@ -55,7 +76,7 @@ public class Home {
 	}
 	
 
-	public Pets getPet() {
+	public String getPet() {
 		return pets;
 	}
 	
@@ -81,7 +102,7 @@ public class Home {
 	}
 	
 	public int getLeaseLength() {
-		return LeaseLength;
+		return leaseLength;
 	}
 	
 	

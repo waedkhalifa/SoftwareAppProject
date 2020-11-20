@@ -1,6 +1,10 @@
 package najah.edu.acceptance_test;
     
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.List;import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import io.cucumber.datatable.DataTable;
@@ -9,16 +13,19 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import najah.edu.app.Home;
 import najah.edu.app.Amenities;
+import najah.edu.app.ChooseByCombine;
+import najah.edu.app.EmailHolderMocking;
 import najah.edu.app.Material;
-import najah.edu.app.Pets;
 import najah.edu.app.Placement;
 import najah.edu.app.Type;
-import najah.edu.app.toFind;
-
+import najah.edu.app.WebEmailService;
+import najah.edu.app.TheFinder;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 public class SearchHomeSteps {
 	 
 	private String specification;
-	private static List<Home> byType;
+	private List<Home> byType;
 	private List<Home> byMaterial;
 	private List<Home> byPrice;
 	private List<Home> byArea;
@@ -26,11 +33,18 @@ public class SearchHomeSteps {
 	private List<Home> byRangePrices;
 	private List<Home> byPets;
 	private List<Home> byAmenities;
-	private List<Home> byAnd;
 	private List<Home> byRangeArea;
     private List<Home> byNumberOfBedrooms;
     private List<Home> byNumberOfBathrooms;
     private List<Home> byLeaseLength;
+    private List<Home> byCommon;
+    private List<Home> homs;
+    private Home myHome;
+    private ChooseByCombine combine;
+	private EmailHolderMocking mockWebHolder;
+	private Home checkHome;
+	int count1=0;
+	int count2=0;
 	int price;
 	int area;
 	int p1;
@@ -40,55 +54,71 @@ public class SearchHomeSteps {
 	int numBedrooms;
 	int numBathrooms;
 	int LeaseLength;
-	private toFind f;
+	private TheFinder f;
 
-	public SearchHomeSteps(toFind f) {
+
+	public SearchHomeSteps(TheFinder f,EmailHolderMocking mockWebHolderIn) {
 		this.f=f;
+		mockWebHolder=mockWebHolderIn;
 	}
 	
 	@Given("these homes are contained in the system")
 	public void theseHomesAreContainedInTheSystem(DataTable feature_repository)
 	{ 	List<List<String>> FR = feature_repository.asLists(String.class);
+	homs=new ArrayList<>();
 	for (List<String> List : FR) {
 		
 		String[] parts1=List.get(0).split("_");
         String[] parts2=List.get(1).split("_");
-        
-  
-    f.setHomes(new Home(new Type(parts1[0]), new Material(parts1[1]), new Placement(parts1[2]),new Pets(parts1[3]),
-        		new Amenities(parts1[4]),Integer.parseInt(parts2[0]),Integer.parseInt(parts2[1]),Integer.parseInt(parts2[2]),
-        		Integer.parseInt(parts2[3]), Integer.parseInt(parts2[4])));
+        myHome=new Home();
+    	   myHome.setType(new Type(parts1[0]));
+           myHome.setMaterial(new Material(parts1[1]));
+           myHome.setPlacement(new Placement(parts1[2]));
+           myHome.setPets(parts1[3]);
+           myHome.setAmenities(new Amenities(parts1[4]));
+           myHome.setPrice(Integer.parseInt(parts2[0]));
+           myHome.setArea(Integer.parseInt(parts2[1]));
+           myHome.setNumOfBedrooms(Integer.parseInt(parts2[2]));
+           myHome.setNumOfBathrooms(Integer.parseInt(parts2[3]));
+           myHome.setLeaseLength(Integer.parseInt(parts2[4]));
+           f.setHomes(myHome);
+       
+       homs.add(myHome);
+    
        }		
 
-
+	
 	}
 	
 	@When("I search about home by {string}") 
 	public void iSearchAboutHomeBy(String specification) 
 	{ this.specification = specification;
 	if (specification.equals(Type.APARTMENT)||specification.equals(Type.HOUSE)) { 
-          byType=f.Bytype(specification); }
+          byType=f.byType(specification); }
 	
 	else if (specification.equals(Material.WOOD)||specification.equals(Material.STONE)||
 			specification.equals(Material.BRICK)) 
-		{ byMaterial = f.ByMaterial(specification); }
+		{ byMaterial = f.byMaterial(specification); }
 	
 	else if (specification.equals(Placement.CITY)||specification.equals(Placement.VILLAGE))
 	{ byPlacement = f.byPlacement(specification);
 
 	}
 	
-	else if (specification.equals(Pets.YES)||specification.equals(Pets.NO))
+	else if (specification.equals("YES")||specification.equals("NO"))
 	{ byPets = f.byPets(specification); }
 	
 	else if ((specification.contains(Amenities.AIRCONDITIONING))||(specification.contains(Amenities.BALCONY))||
-			(specification.contains(Amenities.ELEVATOR))||(specification.contains(Amenities.FIREPLACE))||
-					(specification.contains(Amenities.GARAGEPARKING))||(specification.contains(Amenities.SWIMMINGPOOL))){
-		byAmenities=f.ByAmenities(specification);
+			(specification.contains(Amenities.ELEVATOR))||(specification.contains(Amenities.FIREPLACE))||(specification.contains(Amenities.GARAGEPARKING))||(specification.contains(Amenities.SWIMMINGPOOL))){
+		String[] amee=specification.split(",");
+		byAmenities=f.byAmenities(amee);
+
 	}
+   
 	
 	}
-	
+
+
 	@Then("A list of homes that matches the type specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesTheTypeSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
 	if (specification.equals(Type.APARTMENT)) 
@@ -106,8 +136,7 @@ public class SearchHomeSteps {
 	     }
 	}
 	
-//	for(int x=0;x<byType.size();x++)
-	//{System.out.println(byType.get(x));}
+
 	
 	}
 	
@@ -136,14 +165,13 @@ public class SearchHomeSteps {
 			 { assertTrue(byMaterial.get(s).getMaterial().getMa().equals(specification)); } 
 				}
 		}
-		/*for(int x=0;x<byMaterial.size();x++)
-		{ System.out.println(byMaterial.get(x));}*/
+		
 	}
 	
 	@When("I search about home with price less than {int}") 
 	public void iSearchAboutHomeWithPriceLessThan(Integer price) {
 		 this.price = price.intValue();
-		byPrice=f.ByPrice(this.price);
+		byPrice=f.byPrice(this.price);
 
 	}
 	
@@ -153,30 +181,25 @@ public class SearchHomeSteps {
 	    	for(int k=0;k<byPrice.size();k++) {
 		    	assertTrue(byPrice.get(k).getPrice()<price);
 		    }
-		
-	
-       /* for(int x=0;x<byPrice.size();x++)
-           { System.out.println(byPrice.get(x)); }
-	*/
 	}
-	
+
 	@When("I search about home with area less than {int}") 
 	public void iSearchAboutHomeWithAreaLessThan(Integer area) {
 		 this.area = area.intValue();
-		byArea=f.ByArea(this.area);
+		byArea=f.byArea(this.area);
 			
 			}
 	
 	@Then("A list of homes that matches the area specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesTheAreaSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
+
+		
 		  assertEquals(2,byArea.size());
 		  for(int k=0;k<byArea.size();k++) {
 			assertTrue(byArea.get(k).getArea()<area);
 		   }
 	
-        /* for(int x=0;x<byArea.size();x++)
-        { System.out.println(byArea.get(x)); }
-	*/
+        
 	}
 	
 	@Then("A list of homes that matches the placement specification should be returned and printed on the console")
@@ -199,17 +222,14 @@ public class SearchHomeSteps {
 	             }
 		}
 		
-		/*for(int x=0;x<byPlacement.size();x++)
-		{
-			System.out.println(byPlacement.get(x));
-		}*/
+		
 	}
 	
 	@When("I search about home by between range {int} and {int} of prices") 
 	public void iSearchAboutHomeByBetweenRangeAndOfPrices(Integer price1, Integer price2) {
 		 p1 = price1.intValue();
 		 p2 = price2.intValue();
-		byRangePrices=f.ByRangePrices(p1,p2);
+		byRangePrices=f.byRangePrices(p1,p2);
 			
 			}
 	
@@ -220,68 +240,45 @@ public class SearchHomeSteps {
 			assertTrue(byRangePrices.get(k).getPrice()>p1 && byRangePrices.get(k).getPrice()<p2);
 		   }
 
-		/*for(int x=0;x<byRangePrices.size();x++)
-		{
-			System.out.println(byRangePrices.get(x));
-		}*/
+		
 
 	}
 	
 	@Then("A list of homes that matches the allow pets should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheAllowPetsShouldBeReturnedAndPrintedOnTheConsole(){
-		if (specification.equals(Pets.YES)) 
+		if (specification.equals("YES")) 
 		{ assertEquals(2,byPets.size());
 		for(int k=0;k<byPets.size();k++) {
-			assertTrue(byPets.get(k).getPet().getPe().equals(specification)); 
+			assertTrue(byPets.get(k).getPet().equals(specification)); 
 			}
 		}
 		 
-		else if (specification.equals(Pets.NO)) 
+		else if (specification.equals("NO")) 
 		{  
 	        assertEquals(2,byPets.size()); 
 		    for(int s=0;s<byPets.size();s++) {
-	            { assertTrue(byPets.get(s).getPet().getPe().equals(specification)); } 
+	            { assertTrue(byPets.get(s).getPet().equals(specification)); } 
 		     }
 		}
 		
-		/*for(int x=0;x<byPets.size();x++)
-		{System.out.println(byPets.get(x));}*/
+		
 		}
 	
 
 	@Then("A list of homes that matches the amenities specification should be returned and printed on the console")
 	 public void aListOfHomesThatMatchesTheAmenitiesSpecificationShouldBeReturnedAndPrintedOnTheConsole(){ 
-	if (specification.contains(Amenities.AIRCONDITIONING)) 
-	{ assertEquals(1,byAmenities.size());
 	
-	}
-	 
-	if (specification.contains(Amenities.BALCONY)) 
-	{ assertEquals(2,byAmenities.size());
-
-	}
-	
-	if (specification.contains(Amenities.ELEVATOR)) 
-	{ assertEquals(1,byAmenities.size());
-
-	}
-	
-	if (specification.contains(Amenities.FIREPLACE)) 
-	{ assertEquals(1,byAmenities.size());
-	
-	}
-	
-	if (specification.contains(Amenities.GARAGEPARKING)) 
-	{ assertEquals(1,byAmenities.size());
-	
-	}
-	
-	if (specification.contains(Amenities.SWIMMINGPOOL)) 
-	{ assertEquals(1,byAmenities.size());
-
-	}
-//	for(int x=0;x<byAmenities.size();x++)
-	//{System.out.println(byAmenities.get(x));}
+		for(int i=0;i<byAmenities.size();i++) {
+			for(int j=0;j<f.getHomes().size();j++) {
+		checkHome=new Home();
+		checkHome=homs.get(j);
+				if(byAmenities.get(i)==checkHome)
+				{
+					count2++;
+				}
+			}
+		}
+		assertEquals(count2,byAmenities.size());
 	
 	}
 	
@@ -289,7 +286,7 @@ public class SearchHomeSteps {
 	public void iSearchAboutHomeByAreaBetweenAnd(Integer area1, Integer area2) {
 		 a1 = area1.intValue();
 		a2 = area2.intValue();
-		byRangeArea=f.ByRangeArea(a1,a2);
+		byRangeArea=f.byRangeArea(a1,a2);
 			}
 	@Then("A list of homes that matches the range of area should be returned and printed on the console")
 	public void aListOfHomesThatMatchesTheRangeOfAreasShouldBeReturnedAndPrintedOnTheConsole() {
@@ -297,16 +294,13 @@ public class SearchHomeSteps {
 		  for(int k=0;k<byRangeArea.size();k++) {
 			assertTrue(byRangeArea.get(k).getArea()>a1 && byRangeArea.get(k).getArea()<a2);
 		   }
-	//	for(int x=0;x<byRangeArea.size();x++)
-		//{
-			//System.out.println(byRangeArea.get(x));
-		//}
+	
 	}
 	
 	@When("I search about home by number of bedrooms {int}") 
 	public void iSearchAboutHomeByNumberOfBedrooms(Integer number) 
 	{ numBedrooms = number.intValue();
-    byNumberOfBedrooms = f.ByNumOfBedrooms(numBedrooms);
+    byNumberOfBedrooms = f.byNumOfBedrooms(numBedrooms);
 	}
 	
 	@Then("A list of homes that matches the number of bedrooms should be returned and printed on the console")
@@ -340,14 +334,13 @@ public class SearchHomeSteps {
 		
 		}
 
-//		for(int x=0;x<byNumberOfBedrooms.size();x++)
-//		{System.out.println(byNumberOfBedrooms.get(x));}
+
 		}
 	
 	@When("I search about home by number of bathrooms {int}") 
 	public void iSearchAboutHomeByNumberOfBathrooms(Integer number) 
 	{ numBathrooms = number.intValue();
-    byNumberOfBathrooms = f.ByNumOfBathrooms(numBathrooms);
+    byNumberOfBathrooms = f.byNumOfBathrooms(numBathrooms);
 	}
 	
 	@Then("A list of homes that matches the number of bathrooms should be returned and printed on the console")
@@ -366,18 +359,18 @@ public class SearchHomeSteps {
 		{  
 			assertEquals(2,byNumberOfBathrooms.size());
 		
-		}
+		} 
 		  
 
-	//	for(int x=0;x<byNumberOfBathrooms.size();x++)
-		//{System.out.println(byNumberOfBathrooms.get(x));}
+	
 		}
 	
 	
 	@When("I search about home by lease length {int}") 
 	public void iSearchAboutHomeByLeaseLength(Integer number) 
 	{ LeaseLength = number.intValue();
-    byLeaseLength = f.ByLeaseLength(LeaseLength);
+    byLeaseLength = f.byLeaseLength(LeaseLength);
+
 	}
 	
 	
@@ -419,44 +412,94 @@ public class SearchHomeSteps {
 			assertEquals(2,byLeaseLength.size());
 		}
 
-		//for(int x=0;x<byLeaseLength.size();x++)
-		//{System.out.println(byLeaseLength.get(x));}
-		}
-	
-	@When("I search about home by {string} and by {string}") 
-	public void iSearchAboutHomeByAndBy(String s1,String s2) {
-		S1=s1;
-		S2=s2;
-		if ((S1.equals(Type.APARTMENT)||S1.equals(Type.HOUSE))&&(S2.equals(Material.WOOD)||S2.equals(Material.STONE)||
-				S2.equals(Material.BRICK)) ) { 
-	          byAnd=f.ByAnd(S1,S2); }
-		
-	}
-
-	
-	@Then("A list of homes that matches the type and material specification should be returned and printed on the console")
-	public void aListOfHomesThatMatchesTheTypeAndMaterialShouldBeReturnedAndPrintedOnTheConsole(){
-		if (S1.equals(Type.APARTMENT)&&S2.equals(Material.WOOD)) 
-		{ assertEquals(1,byAnd.size());
 		
 		}
-		else if (S1.equals(Type.APARTMENT)&&S2.equals(Material.STONE)) 
-		{ assertEquals(0,byAnd.size());
-		
-		}
-		
-		else if (S1.equals(Type.APARTMENT)&&S2.equals(Material.BRICK)) 
-		{ assertEquals(1,byAnd.size());
-		
-		}
-		 
-		
-	//	for(int x=0;x<byAnd.size();x++)
-		//{ System.out.println(byAnd.get(x));}
-	
-	}
 	
 
+	@When("I search about home by combination {string}") 
+	public void iSearchAboutHomeByCombination(String s1) {
+
+	S1=s1;
+		String[] com1=S1.split(",");
+		combine=new ChooseByCombine();
+		combine.sendAllHomes(f.getHomes());
+		combine.getObjFinder(f);
+		byCommon=combine.combination(com1);
+		
 	
+
+	}
 	
+	@Then("A list of homes that matches these specifications should be returned and printed on the console")
+	public void aListOfHomesThatMatchesTheseSpecificationsShouldBeReturnedAndPrintedOnTheConsile() {
+		for(int i=0;i<byCommon.size();i++) {
+			for(int j=0;j<f.getHomes().size();j++) {
+		checkHome=new Home();
+		checkHome=homs.get(j);
+				if(byCommon.get(i)==checkHome)
+				{
+					count1++;
+				}
+			}
+		}
+		assertEquals(count1,byCommon.size());
+	}
+
+
+	@Then("email with result should be send to user {string} with material information")
+	public void emailWithResultShouldBeSendToUserWithMaterialInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byMaterial);
+
+	}
+
+	@Then("email with result should be send to user {string} with type information")
+	public void emailWithResultShouldBeSendToUserWithTypeInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byType);
+
+	}
+	@Then("email with result should be send to user {string} with placement information")
+	public void emailWithResultShouldBeSendToUserWithPlacementInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byPlacement);
+	}
+	
+	@Then("email with result should be send to user {string} with leaselength information")
+	public void emailWithResultShouldBeSendToUserWithLeaseLengthInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byLeaseLength);
+	}
+	@Then("email with result should be send to user {string} with price information")
+	public void emailWithResultShouldBeSendToUserWithPriceInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byPrice);
+	}
+	@Then("email with result should be send to user {string} with area information")
+	public void emailWithResultShouldBeSendToUserWithAreaInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byArea);
+	}
+	@Then("email with result should be send to user {string} with range of prices information")
+	public void emailWithResultShouldBeSendToUserWithRangeOfPricesInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byRangePrices);
+	}
+	@Then("email with result should be send to user {string} with range of area information")
+	public void emailWithResultShouldBeSendToUserWithRangeOfAreaInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byRangeArea);
+	}
+	@Then("email with result should be send to user {string} with bedrooms information")
+	public void emailWithResultShouldBeSendToUserWithBedroomsInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byNumberOfBedrooms);
+	}
+	@Then("email with result should be send to user {string} with bathrooms information")
+	public void emailWithResultShouldBeSendToUserWithBathroomsInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byNumberOfBathrooms);
+	}
+	@Then("email with result should be send to user {string} with combination information")
+	public void emailWithResultShouldBeSendToUserWithCombinationInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byCommon);
+	}
+	@Then("email with result should be send to user {string} with pets information")
+	public void emailWithResultShouldBeSendToUserWithPetsInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byPets);
+	}
+	@Then("email with result should be send to user {string} with amenities information")
+	public void emailWithResultShouldBeSendToUserWithAmenitiesInfrormation(String email){
+			verify(mockWebHolder.getEmailService(),times(1)).sendEmail(email, byAmenities);
+	}
 }
